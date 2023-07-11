@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -18,12 +17,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? // @db.Text
-  access_token      String? // @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? // @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -39,13 +38,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  odooSessions  OdooSession[]
 }
 
 model VerificationToken {
@@ -54,4 +54,43 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+//Custom Models
+
+model OdooSession {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  url       String
+  port      String   @default("8080")
+  db        String
+  username  String
+  password  String
+
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String
+  odooVersion OdooVersion @unique @default(ODOO_16)
+  odooModels  OdooModel[]
+}
+
+enum OdooVersion {
+  ODOO_10
+  ODOO_11
+  ODOO_12
+  ODOO_13
+  ODOO_14
+  ODOO_15
+  ODOO_16
+}
+
+model OdooModel {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String   @unique
+  description String
+
+  odooSession   OdooSession @relation(fields: [odooSessionId], references: [id])
+  odooSessionId String
 }
