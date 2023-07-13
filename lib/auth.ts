@@ -3,7 +3,7 @@ import { getServerSession, type DefaultSession, type NextAuthOptions } from "nex
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 
-import { prisma } from "@/lib/db";
+import { prisma } from "./db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
