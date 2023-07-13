@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/Button";
+
 export default async function Home() {
   var Odoo = require("async-odoo-xmlrpc");
   var odoo = new Odoo({
@@ -12,7 +14,8 @@ export default async function Home() {
   let id = await odoo.execute_kw("account.invoice", "search", [[]]);
   return (
     <main>
-      <h1>{test}</h1>
+      <Button className="animate-in zoom-in duration-500">click</Button>
+      <h1>{test} u</h1>
     </main>
   );
 }
