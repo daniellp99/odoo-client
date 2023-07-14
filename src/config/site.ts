@@ -8,6 +8,10 @@ export const siteConfig = {
       title: "Home",
       href: "/",
     },
+    {
+      title: "Connections",
+      href: "/connection",
+    },
   ],
   links: {
     github: "https://github.com/shadcn/ui",
