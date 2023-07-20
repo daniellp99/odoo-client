@@ -12,12 +12,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { UserAvatar } from "@/components/UserAvatar";
+import { getBaseUrl } from "@/lib/utils";
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">;
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
+  const url = getBaseUrl();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -37,14 +39,6 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/">Feed</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem asChild>
-          <Link href="/r/create">Create Community</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem asChild>
           <Link href="/settings">Settings</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -53,7 +47,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           onSelect={(event) => {
             event.preventDefault();
             signOut({
-              callbackUrl: `${window.location.origin}/sign-in`,
+              callbackUrl: `${url}/`,
             });
           }}
         >
