@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
@@ -15,11 +16,12 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { RegisterRequest, RegisterValidator } from "@/lib/validators/userAuth";
+import { Icons } from "@/components/Icons";
 
 export default function UseRegisterForm() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
 
   const form = useForm<RegisterRequest>({
     resolver: zodResolver(RegisterValidator),
@@ -31,6 +33,7 @@ export default function UseRegisterForm() {
 
   async function onSubmit(values: RegisterRequest) {
     try {
+      setIsLoading(true);
       const body = { ...values };
       const res = await fetch("api/auth/register", {
         method: "POST",
@@ -38,10 +41,17 @@ export default function UseRegisterForm() {
         headers: { "Content-Type": "application/json" },
       });
 
+      const newUser = await res.json();
+      console.log(newUser);
+
       form.reset();
-      router.push(`sign-in${callbackUrl ? `?callbackUrl=${callbackUrl}` : ""}`);
+      router.push(
+        `${searchParams.has("callbackUrl") ? `${searchParams.get("callbackUrl")}` : "/sign-in"}`
+      );
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -58,7 +68,7 @@ export default function UseRegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="admin@com" {...field} />
+                <Input placeholder="admin@com" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -71,13 +81,21 @@ export default function UseRegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="*****" {...field} />
+                <Input placeholder="*****" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button variant={"secondary"} className="text-background w-full" type="submit">
+
+        <Button
+          variant={"secondary"}
+          className="text-background w-full"
+          type="submit"
+          disabled={isLoading}
+        >
+          {" "}
+          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           Register
         </Button>
       </form>

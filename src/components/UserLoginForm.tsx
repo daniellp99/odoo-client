@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
@@ -17,12 +18,13 @@ import {
 import { Input } from "@/components/ui/Input";
 import { toast } from "@/components/ui/use-toast";
 import { LoginRequest, LoginValidator } from "@/lib/validators/userAuth";
+import { Icons } from "./Icons";
 
 export default function UseLoginForm() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
-  // 1. Define your form.
+
   const form = useForm<LoginRequest>({
     resolver: zodResolver(LoginValidator),
     defaultValues: {
@@ -31,29 +33,29 @@ export default function UseLoginForm() {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: LoginRequest) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    setIsLoading(true);
     await signIn("credentials", {
       ...values,
       redirect: false,
-    }).then((response) => {
-      if (response?.error) {
-        // show notification for user
-        console.log(response);
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          description: `${
-            response.error !== "CredentialsSignin" ? response.error : "Invalid Password"
-          }`,
-        });
-      } else {
-        form.reset();
-        router.push(`${searchParams.has("callbackUrl") ? `${callbackUrl}` : "/"}`);
-      }
-    });
+    })
+      .then((response) => {
+        if (response?.error) {
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: `${
+              response.error !== "CredentialsSignin" ? response.error : "Invalid Password"
+            }`,
+          });
+        } else {
+          form.reset();
+          router.push(
+            `${searchParams.has("callbackUrl") ? `${searchParams.get("callbackUrl")}` : "/"}`
+          );
+        }
+      })
+      .finally(() => setIsLoading(false));
   }
 
   return (
@@ -69,7 +71,7 @@ export default function UseLoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="admin@com" {...field} />
+                <Input placeholder="admin@com" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -82,13 +84,20 @@ export default function UseLoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="*****" {...field} />
+                <Input placeholder="*****" type="password" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button variant={"secondary"} className="text-background w-full" type="submit">
+        <Button
+          variant={"secondary"}
+          className="text-background w-full"
+          type="submit"
+          disabled={isLoading}
+        >
+          {" "}
+          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           Login
         </Button>
       </form>
