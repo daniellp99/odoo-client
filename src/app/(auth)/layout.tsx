@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { siteConfig } from "@/config/site";
 import Providers from "@/context/Providers";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/Toaster";
 
 export const metadata: Metadata = {
   title: {
@@ -30,10 +31,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head />
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
         <Providers attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
-            <div className="flex-1">{children}</div>
-          </div>
+          <div className="container mx-auto max-w-7xl  h-full">{children}</div>
+
+          <Toaster />
         </Providers>
       </body>
     </html>
