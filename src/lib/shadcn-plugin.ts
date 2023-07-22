@@ -21,6 +21,10 @@ export const shadcnPlugin = plugin(
         "--secondary-foreground": "222.2 47.4% 11.2%",
         "--accent": "210 40% 96.1%",
         "--accent-foreground": "222.2 47.4% 11.2%",
+        "--success": "157.83 64.08% 51.96%",
+        "--success-foreground": "210 40% 98%",
+        "--warning": "38 92% 50%",
+        "--warning-foreground": "48 96% 89%",
         "--destructive": "0 84.2% 60.2%",
         "--destructive-foreground": "210 40% 98%",
         "--ring": "215 20.2% 65.1%",
@@ -43,6 +47,10 @@ export const shadcnPlugin = plugin(
         "--secondary-foreground": "210 40% 98%",
         "--accent": "217.2 32.6% 17.5%",
         "--accent-foreground": "210 40% 98%",
+        "--success": "157.83 64.08% 51.96%",
+        "--success-foreground": "210 40% 98%",
+        "--warning": "48 96% 89%",
+        "--warning-foreground": "38 92% 50%",
         "--destructive": "0 62.8% 30.6%",
         "--destructive-foreground": "0 85.7% 97.3%",
         "--ring": "217.2 32.6% 17.5%",
@@ -81,6 +89,14 @@ export const shadcnPlugin = plugin(
           secondary: {
             DEFAULT: "hsl(var(--secondary))",
             foreground: "hsl(var(--secondary-foreground))",
+          },
+          success: {
+            DEFAULT: "hsl(var(--success))",
+            foreground: "hsl(var(--success-foreground))",
+          },
+          warning: {
+            DEFAULT: "hsl(var(--warning))",
+            foreground: "hsl(var(--warning-foreground))",
           },
           destructive: {
             DEFAULT: "hsl(var(--destructive))",
