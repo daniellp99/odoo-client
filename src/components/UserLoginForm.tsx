@@ -71,7 +71,7 @@ export default function UseLoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="admin@com" {...field} disabled={isLoading} />
+                <Input placeholder="admin@com" type="email" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
