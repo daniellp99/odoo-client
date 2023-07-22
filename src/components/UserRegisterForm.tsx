@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/Input";
 import { RegisterRequest, RegisterValidator } from "@/lib/validators/userAuth";
 import { Icons } from "@/components/Icons";
+import { toast } from "./ui/use-toast";
+import { signIn } from "next-auth/react";
 
 export default function UseRegisterForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,19 +37,30 @@ export default function UseRegisterForm() {
     try {
       setIsLoading(true);
       const body = { ...values };
-      const res = await fetch("api/auth/register", {
+      const registerRes = await fetch("api/auth/register", {
         method: "POST",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" },
       });
-
-      const newUser = await res.json();
-      console.log(newUser);
-
-      form.reset();
-      router.push(
-        `${searchParams.has("callbackUrl") ? `${searchParams.get("callbackUrl")}` : "/sign-in"}`
-      );
+      const res = await registerRes.json();
+      console.log("res", res);
+      if (res.user) {
+        toast({
+          variant: "success",
+          title: "Registration Success",
+          description: "Your user account is ready to use",
+        });
+        form.reset();
+        router.push(
+          `${searchParams.has("callbackUrl") ? `${searchParams.get("callbackUrl")}` : "/"}`
+        );
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Registration Account Error",
+          description: `${res.error}`,
+        });
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -68,7 +81,7 @@ export default function UseRegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="admin@com" {...field} disabled={isLoading} />
+                <Input placeholder="admin@com" type="email" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -81,7 +94,7 @@ export default function UseRegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="*****" {...field} disabled={isLoading} />
+                <Input placeholder="*****" type="password" {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>

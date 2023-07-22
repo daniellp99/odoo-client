@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       },
     });
     if (userExist) {
-      return new Response("Username already exists", { status: 409 });
+      return NextResponse.json({ error: 'Username already exists' }, { status: 409 })
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -24,14 +24,11 @@ export async function POST(request: Request) {
     const newUser = await prisma.user.create({
       data: { email, password: hashedPassword },
     });
-    return NextResponse.json(newUser);
+    return NextResponse.json({ user: newUser }, { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(error.message, { status: 400 });
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
-
-    return new Response("Something went wrong. Please try again", {
-      status: 500,
-    });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
