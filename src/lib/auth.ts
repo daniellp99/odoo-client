@@ -2,7 +2,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import {
   getServerSession,
-  type DefaultSession,
   type NextAuthOptions
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -10,21 +9,6 @@ import GithubProvider from "next-auth/providers/github";
 
 import { prisma } from "@/lib/db";
 import { LoginValidator } from "@/lib/validators/userAuth";
-
-declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      username: string;
-      // role: UserRole;
-    } & DefaultSession["user"];
-  }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
-}
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -67,7 +51,6 @@ export const authOptions: NextAuthOptions = {
       return {
         ...session,
         user: {
-          ...session.user,
           id: token.id,
           name: token.name,
           email: token.email,
@@ -115,7 +98,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/sign-in",
     signOut: "/sign-out",
-    error: "/error",
   },
 };
 
