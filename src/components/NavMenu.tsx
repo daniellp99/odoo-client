@@ -10,6 +10,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/NavigationMenu";
 import { NavItem } from "@/types/nav";
+import { cn } from "@/lib/utils";
 
 interface NavMenuProps {
   items: NavItem[];
@@ -22,7 +23,9 @@ export function NavMenu({ items }: NavMenuProps) {
         {items.map((item) => (
           <NavigationMenuItem key={item.title}>
             <Link href={item.href!} legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink
+                className={cn(navigationMenuTriggerStyle(), "bg-primary text-background")}
+              >
                 {item.title}
               </NavigationMenuLink>
             </Link>
