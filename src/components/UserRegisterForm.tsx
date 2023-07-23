@@ -17,8 +17,7 @@ import {
 import { Input } from "@/components/ui/Input";
 import { RegisterRequest, RegisterValidator } from "@/lib/validators/userAuth";
 import { Icons } from "@/components/Icons";
-import { toast } from "./ui/use-toast";
-import { signIn } from "next-auth/react";
+import { toast } from "@/components/ui/use-toast";
 
 export default function UseRegisterForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
