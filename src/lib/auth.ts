@@ -1,14 +1,26 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import {
+  DefaultSession,
   getServerSession,
-  type NextAuthOptions
+  type NextAuthOptions,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 
 import { prisma } from "@/lib/db";
 import { LoginValidator } from "@/lib/validators/userAuth";
+
+declare module "next-auth" {
+  /**
+   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
+    user: {
+      id: string;
+    } & DefaultSession["user"];
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -55,7 +67,6 @@ export const authOptions: NextAuthOptions = {
           name: token.name,
           email: token.email,
           image: token.picture,
-          username: token.username,
         },
       };
     },
@@ -72,23 +83,11 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      if (!dbUser.username) {
-        await prisma.user.update({
-          where: {
-            id: dbUser.id,
-          },
-          data: {
-            username: bcrypt.hashSync("username", 10),
-          },
-        });
-      }
-
       return {
         id: dbUser.id,
         name: dbUser.name,
         email: dbUser.email,
         picture: dbUser.image,
-        username: dbUser.username,
       };
     },
   },
