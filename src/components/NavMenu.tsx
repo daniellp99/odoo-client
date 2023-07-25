@@ -24,7 +24,10 @@ export function NavMenu({ items }: NavMenuProps) {
           <NavigationMenuItem key={item.title}>
             <Link href={item.href!} legacyBehavior passHref>
               <NavigationMenuLink
-                className={cn(navigationMenuTriggerStyle(), "bg-primary text-background")}
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  "bg-primary text-background"
+                )}
               >
                 {item.title}
               </NavigationMenuLink>

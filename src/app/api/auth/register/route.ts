@@ -16,7 +16,10 @@ export async function POST(request: Request) {
       },
     });
     if (userExist) {
-      return NextResponse.json({ error: 'Username already exists' }, { status: 409 })
+      return NextResponse.json(
+        { error: "Username already exists" },
+        { status: 409 }
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,6 +32,9 @@ export async function POST(request: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

@@ -27,7 +27,11 @@ export async function SiteHeader() {
             </Link>
           )}
           <nav className="flex items-center space-x-1">
-            <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
+            <Link
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+            >
               <div
                 className={buttonVariants({
                   size: "icon",

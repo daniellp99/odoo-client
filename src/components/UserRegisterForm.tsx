@@ -51,7 +51,11 @@ export default function UseRegisterForm() {
         });
         form.reset();
         router.push(
-          `${searchParams.has("callbackUrl") ? `${searchParams.get("callbackUrl")}` : "/"}`
+          `${
+            searchParams.has("callbackUrl")
+              ? `${searchParams.get("callbackUrl")}`
+              : "/"
+          }`
         );
       } else {
         toast({
@@ -80,7 +84,12 @@ export default function UseRegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="admin@com" type="email" {...field} disabled={isLoading} />
+                <Input
+                  placeholder="admin@com"
+                  type="email"
+                  {...field}
+                  disabled={isLoading}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -93,7 +102,12 @@ export default function UseRegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="*****" type="password" {...field} disabled={isLoading} />
+                <Input
+                  placeholder="*****"
+                  type="password"
+                  {...field}
+                  disabled={isLoading}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

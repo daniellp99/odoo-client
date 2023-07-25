@@ -25,11 +25,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <head />
-      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
         <Providers attribute="class" defaultTheme="system" enableSystem>
           <SiteHeader />
           <div className="container max-w-7xl mx-auto h-full">{children}</div>

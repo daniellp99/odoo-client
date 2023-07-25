@@ -8,9 +8,13 @@ import { Button } from "@/components/ui/Button";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 
-interface GitHubSignInButtonProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface GitHubSignInButtonProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function GitHubSignInButton({ className, ...props }: GitHubSignInButtonProps) {
+export default function GitHubSignInButton({
+  className,
+  ...props
+}: GitHubSignInButtonProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginWithGitHub = async () => {

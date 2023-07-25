@@ -45,13 +45,19 @@ export default function UseLoginForm() {
             variant: "destructive",
             title: "Something went wrong",
             description: `${
-              response.error !== "CredentialsSignin" ? response.error : "Invalid Password"
+              response.error !== "CredentialsSignin"
+                ? response.error
+                : "Invalid Password"
             }`,
           });
         } else {
           form.reset();
           router.push(
-            `${searchParams.has("callbackUrl") ? `${searchParams.get("callbackUrl")}` : "/"}`
+            `${
+              searchParams.has("callbackUrl")
+                ? `${searchParams.get("callbackUrl")}`
+                : "/"
+            }`
           );
         }
       })
@@ -71,7 +77,12 @@ export default function UseLoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="admin@com" type="email" {...field} disabled={isLoading} />
+                <Input
+                  placeholder="admin@com"
+                  type="email"
+                  {...field}
+                  disabled={isLoading}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -84,7 +95,12 @@ export default function UseLoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="*****" type="password" {...field} disabled={isLoading} />
+                <Input
+                  placeholder="*****"
+                  type="password"
+                  {...field}
+                  disabled={isLoading}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
