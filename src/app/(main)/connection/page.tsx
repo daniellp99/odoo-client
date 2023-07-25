@@ -1,13 +1,31 @@
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { getAuthSession } from "@/lib/auth";
+
+import { z } from "zod";
+
+import { columns } from "@/app/(main)/connection/components/columns";
+import { DataTable } from "./components/data-table";
+import { OdooSessionPasswordLess } from "@/lib/validators/odooSessionsSchema";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/db";
+
+async function getOdooSessions(userId: string) {
+  const odooSessions = prisma.odooSession.findMany({
+    where: { authorId: userId },
+  });
+
+  return z.array(OdooSessionPasswordLess).parse(await odooSessions);
+}
 
 export default async function ConnectionPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getAuthSession();
+  if (!session) {
+    redirect("/sign-in?callbackUrl=/connection");
+  }
+  const odooSessions = await getOdooSessions(session.user.id);
+
   return (
-    <main>
-      <h1>Protected Page</h1>
-      <p>You can view this page because you are signed in.</p>
-      {session ? <p>{session.user.name}</p> : null}
+    <main className="flex h-full flex-1 flex-col space-y-8 p-8">
+      <DataTable data={odooSessions} columns={columns} />
     </main>
   );
 }
