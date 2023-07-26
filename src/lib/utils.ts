@@ -1,5 +1,7 @@
-import { type ClassValue, clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+
+import { OdooVersion } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,3 +16,10 @@ export function getBaseUrl() {
   }
   return "http://localhost:3000";
 }
+
+export const versions = Object.values(OdooVersion).map((version) => {
+  return {
+    value: version,
+    label: version.split("_")[1],
+  };
+});

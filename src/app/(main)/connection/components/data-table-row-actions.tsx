@@ -1,7 +1,7 @@
 "use client";
 
-import { MoreHorizontalIcon } from "lucide-react";
 import { Row } from "@tanstack/react-table";
+import { MoreHorizontalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -17,8 +17,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-
-import { versions } from "../data/data";
+import { versions } from "@/lib/utils";
 import { OdooSessionValidator } from "@/lib/validators/odooSessionsSchema";
 
 interface DataTableRowActionsProps<TData> {

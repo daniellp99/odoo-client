@@ -4,10 +4,10 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/Badge";
 import { Checkbox } from "@/components/ui/Checkbox";
+import { versions } from "@/lib/utils";
 import { OdooSessionTableShape } from "@/lib/validators/odooSessionsSchema";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { versions } from "../data/data";
 
 export const columns: ColumnDef<OdooSessionTableShape>[] = [
   {

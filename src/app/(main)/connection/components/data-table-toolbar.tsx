@@ -1,13 +1,13 @@
 "use client";
 
-import { XCircleIcon } from "lucide-react";
 import { Table } from "@tanstack/react-table";
+import { XCircleIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { versions } from "../data/data";
-import { DataTableViewOptions } from "./data-table-view-options";
+import { versions } from "@/lib/utils";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
