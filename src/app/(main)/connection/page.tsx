@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { columns } from "@/app/(main)/connection/components/columns";
 import { DataTable } from "./components/data-table";
-import { OdooSessionPasswordLess } from "@/lib/validators/odooSessionsSchema";
+import { OdooSessionTableShape } from "@/lib/validators/odooSessionsSchema";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 
@@ -13,7 +13,7 @@ async function getOdooSessions(userId: string) {
     where: { authorId: userId },
   });
 
-  return z.array(OdooSessionPasswordLess).parse(await odooSessions);
+  return z.array(OdooSessionTableShape).parse(await odooSessions);
 }
 
 export default async function ConnectionPage() {

@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { versions } from "@/lib/utils";
-import { OdooSessionValidator } from "@/lib/validators/odooSessionsSchema";
+import { OdooSessionTableShape } from "@/lib/validators/odooSessionsSchema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -27,7 +27,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const odooSession = OdooSessionValidator.parse(row.original);
+  const odooSession = OdooSessionTableShape.parse(row.original);
 
   return (
     <DropdownMenu>

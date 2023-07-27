@@ -10,10 +10,16 @@ export const OdooSessionValidator = z.object({
   odooVersion: z.nativeEnum(OdooVersion),
 });
 
-export type OdooSessionRequest = z.infer<typeof OdooSessionValidator>;
-
-export const OdooSessionPasswordLess = OdooSessionValidator.omit({
+export const OdooSessionTableShape = OdooSessionValidator.omit({
   password: true,
+}).extend({ id: z.string() });
+
+export const OdooSessionTest = OdooSessionValidator.omit({
+  odooVersion: true,
 });
 
-export type OdooSessionTableShape = z.infer<typeof OdooSessionPasswordLess>;
+export type OdooSessionRequest = z.infer<typeof OdooSessionValidator>;
+export type OdooSessionTableShapeRequest = z.infer<
+  typeof OdooSessionTableShape
+>;
+export type OdooSessionTestRequest = z.infer<typeof OdooSessionTest>;
