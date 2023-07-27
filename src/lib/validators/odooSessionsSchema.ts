@@ -1,7 +1,8 @@
-import { z } from "zod";
 import { OdooVersion } from "@prisma/client";
+import { z } from "zod";
 
-export const OdooSessionValidator = z.object({
+export const OdooSessionSchema = z.object({
+  id: z.string(),
   url: z.string().url(),
   port: z.string().default("8080"),
   db: z.string(),
@@ -10,16 +11,19 @@ export const OdooSessionValidator = z.object({
   odooVersion: z.nativeEnum(OdooVersion),
 });
 
-export const OdooSessionTableShape = OdooSessionValidator.omit({
+export const OdooSessionValidator = OdooSessionSchema.omit({ id: true });
+export const OdooSessionTableShape = OdooSessionSchema.omit({
   password: true,
-}).extend({ id: z.string() });
-
-export const OdooSessionTest = OdooSessionValidator.omit({
+});
+export const OdooSessionTest = OdooSessionSchema.omit({
+  id: true,
   odooVersion: true,
 });
 
+export const OdooSessionPartial = OdooSessionSchema.partial();
 export type OdooSessionRequest = z.infer<typeof OdooSessionValidator>;
 export type OdooSessionTableShapeRequest = z.infer<
   typeof OdooSessionTableShape
 >;
 export type OdooSessionTestRequest = z.infer<typeof OdooSessionTest>;
+export type OdooSessionOptional = z.infer<typeof OdooSessionPartial>;
