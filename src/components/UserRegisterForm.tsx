@@ -42,7 +42,6 @@ export default function UseRegisterForm() {
         headers: { "Content-Type": "application/json" },
       });
       const res = await registerRes.json();
-      console.log("res", res);
       if (res.user) {
         toast({
           variant: "success",
