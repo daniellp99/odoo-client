@@ -73,7 +73,7 @@ model OdooSession {
 
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String
-  odooVersion OdooVersion @unique @default(ODOO_16)
+  odooVersion OdooVersion @default(ODOO_16)
   odooModels  OdooModel[]
 }
 
