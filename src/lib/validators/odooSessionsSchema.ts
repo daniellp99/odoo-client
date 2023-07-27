@@ -20,10 +20,8 @@ export const OdooSessionTest = OdooSessionSchema.omit({
   odooVersion: true,
 });
 
-export const OdooSessionPartial = OdooSessionSchema.partial();
 export type OdooSessionRequest = z.infer<typeof OdooSessionValidator>;
 export type OdooSessionTableShapeRequest = z.infer<
   typeof OdooSessionTableShape
 >;
 export type OdooSessionTestRequest = z.infer<typeof OdooSessionTest>;
-export type OdooSessionOptional = z.infer<typeof OdooSessionPartial>;
