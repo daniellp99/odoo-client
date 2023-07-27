@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 
 import { prisma } from "@/lib/db";
 import { RegisterValidator } from "@/lib/validators/userAuth";
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -30,7 +31,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ user: newUser }, { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      const errors = error.issues.map((issue) => issue.message);
+      return NextResponse.json({ error: errors }, { status: 400 });
     }
     return NextResponse.json(
       { error: "Internal Server Error" },
