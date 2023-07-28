@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import {
-  OdooSessionTest,
-  OdooSessionValidator,
-} from "@/lib/validators/odooSessionsSchema";
+import { OdooSessionTest } from "@/lib/validators/odooSessionsSchema";
 
 export async function POST(request: Request) {
   try {

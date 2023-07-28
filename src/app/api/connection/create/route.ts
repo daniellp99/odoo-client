@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { OdooSessionValidator } from "@/lib/validators/odooSessionsSchema";
-import { authOptions, getAuthSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
 
 export async function POST(request: Request) {
   try {
