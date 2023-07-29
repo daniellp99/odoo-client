@@ -43,6 +43,20 @@ export const columns: ColumnDef<OdooSessionTableShapeRequest>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "url",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Domain" />
+    ),
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("url")}</div>,
+  },
+  {
+    accessorKey: "port",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Port" />
+    ),
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("port")}</div>,
+  },
+  {
     accessorKey: "odooVersion",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Odoo Version" />
@@ -53,7 +67,7 @@ export const columns: ColumnDef<OdooSessionTableShapeRequest>[] = [
       );
 
       return (
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 w-[20px]">
           {version && <Badge variant="outline">{version.label}</Badge>}
         </div>
       );
@@ -72,68 +86,10 @@ export const columns: ColumnDef<OdooSessionTableShapeRequest>[] = [
     ),
   },
   {
-    accessorKey: "url",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Domain" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("url")}</div>,
-  },
-  // {
-  //   accessorKey: "url",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Status" />
-  //   ),
-  //   cell: ({ row }) => {
-  //     const status = statuses.find(
-  //       (status) => status.value === row.getValue("status")
-  //     );
-
-  //     if (!status) {
-  //       return null;
-  //     }
-
-  //     return (
-  //       <div className="flex w-[100px] items-center">
-  //         {status.icon && (
-  //           <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-  //         )}
-  //         <span>{status.label}</span>
-  //       </div>
-  //     );
-  //   },
-  //   filterFn: (row, id, value) => {
-  //     return value.includes(row.getValue(id));
-  //   },
-  // },
-  // {
-  //   accessorKey: "port",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Priority" />
-  //   ),
-  //   cell: ({ row }) => {
-  //     const priority = priorities.find(
-  //       (priority) => priority.value === row.getValue("priority")
-  //     );
-
-  //     if (!priority) {
-  //       return null;
-  //     }
-
-  //     return (
-  //       <div className="flex items-center">
-  //         {priority.icon && (
-  //           <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-  //         )}
-  //         <span>{priority.label}</span>
-  //       </div>
-  //     );
-  //   },
-  //   filterFn: (row, id, value) => {
-  //     return value.includes(row.getValue(id));
-  //   },
-  // },
-  {
     id: "actions",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Actions" />
+    ),
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ];
