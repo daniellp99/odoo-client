@@ -55,11 +55,11 @@ export const columns: ColumnDef<OdooSessionTableShapeRequest>[] = [
       return (
         <div className="flex space-x-2">
           {version && <Badge variant="outline">{version.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("odooVersion")}
-          </span>
         </div>
       );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
   {
