@@ -97,7 +97,7 @@ export default function CreateConnectionForm() {
           description: "You are available to use your newly odoo session",
         });
         form.reset();
-        router.push("/connection");
+        router.refresh();
       } else {
         toast({
           variant: "destructive",
@@ -239,30 +239,30 @@ export default function CreateConnectionForm() {
             )}
           />
         </div>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4">
+          <Button
+            variant={isTested ? "success" : "warning"}
+            className="text-background"
+            type="button"
+            onClick={() => onTest(form.getValues())}
+            disabled={isLoading || isTested}
+          >
+            {" "}
+            {isLoading && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Test
+          </Button>
+          <Button
+            variant="secondary"
+            className="text-background"
+            type="submit"
+            disabled={isLoading || !isTested}
+          >
+            Create
+          </Button>
+        </div>
       </form>
-      <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4">
-        <Button
-          variant={isTested ? "success" : "warning"}
-          className="text-background"
-          type="button"
-          onClick={() => onTest(form.getValues())}
-          disabled={isLoading || isTested}
-        >
-          {" "}
-          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Test
-        </Button>
-        <Button
-          variant="secondary"
-          className="text-background"
-          type="submit"
-          disabled={isLoading || !isTested}
-        >
-          {" "}
-          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Create
-        </Button>
-      </div>
     </Form>
   );
 }
