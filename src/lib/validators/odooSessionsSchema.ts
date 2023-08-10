@@ -19,9 +19,11 @@ export const OdooSessionTest = OdooSessionSchema.omit({
   id: true,
   odooVersion: true,
 });
+export const OdooSessionModelValidator = OdooSessionSchema.pick({ id: true });
 
 export type OdooSessionRequest = z.infer<typeof OdooSessionValidator>;
 export type OdooSessionTableShapeRequest = z.infer<
   typeof OdooSessionTableShape
 >;
 export type OdooSessionTestRequest = z.infer<typeof OdooSessionTest>;
+export type OdooSessionModelRequest = z.infer<typeof OdooSessionModelValidator>;
